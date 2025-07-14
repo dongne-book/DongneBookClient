@@ -1,11 +1,9 @@
+import { RecommendProps } from '@/app/(auth)/recommend';
 import colors from '@/assets/colors/color';
 import DuplicateCheck from '@/components/MakeUI/DuplicateCheck';
-import GaugeBar from '@/components/MakeUI/GaugeBar';
 import FontStyles from '@/components/styles/FontStyles';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { useRouter } from 'expo-router';
 import { useState } from 'react';
-// import { MdOutlineEdit } from 'react-icons/md';
 import {
   Image,
   StyleSheet,
@@ -15,26 +13,18 @@ import {
   View,
 } from 'react-native';
 
-const Profile = () => {
-  const router = useRouter();
+const Profile = ({ step }: RecommendProps) => {
   const [name, setName] = useState('');
   const [nickName, setNickName] = useState('');
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={FontStyles.subtitle}>프로필 설정</Text>
-        <View style={{ marginTop: 12, margin: 12 }}>
-          <GaugeBar progress={1} />
-        </View>
-      </View>
       <View style={styles.bodyImage}>
         <View style={[styles.profileBox]}>
           <View style={[styles.circle]}>
             <Image />
           </View>
           <TouchableOpacity style={styles.edit}>
-            {/* <MdOutlineEdit /> */}
             <MaterialIcons name="edit" size={24} color="black" />
           </TouchableOpacity>
         </View>
@@ -58,18 +48,8 @@ const Profile = () => {
           <DuplicateCheck style={{ top: 10 }} />
         </View>
       </View>
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: 'white',
-          overflow: 'hidden',
-          padding: 16,
-        }}
-      >
-        <TouchableOpacity
-          style={styles.next}
-          onPress={() => router.push('/(auth)/singup-recommand/preference')}
-        >
+      <View style={styles.bodyStep}>
+        <TouchableOpacity style={styles.next} onPress={() => step(2)}>
           <Text style={{ fontSize: 16, fontWeight: 700, color: 'white' }}>
             다음
           </Text>
@@ -82,11 +62,6 @@ const Profile = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  header: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: 'white',
   },
   bodyImage: {
     flex: 2,
@@ -138,6 +113,15 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     paddingHorizontal: 12,
     fontSize: 14,
+  },
+  bodyStep: {
+    flex: 1,
+    width: '100%',
+    backgroundColor: 'white',
+    overflow: 'hidden',
+    padding: 16,
+    position: 'absolute',
+    bottom: 20,
   },
   next: {
     height: 60,

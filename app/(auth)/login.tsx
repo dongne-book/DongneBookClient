@@ -2,11 +2,10 @@ import colors from '@/assets/colors/color';
 import { Separator } from '@/components/MakeUI/Separator';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Image } from 'expo-image';
-import { useRouter } from 'expo-router';
+import { Link } from 'expo-router';
 import React, { useState } from 'react';
 import {
   Alert,
-  Button,
   StyleSheet,
   Text,
   TextInput,
@@ -15,7 +14,6 @@ import {
 } from 'react-native';
 
 export default function LoginScreen() {
-  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -49,30 +47,16 @@ export default function LoginScreen() {
           secureTextEntry
         />
         <View style={{ justifyContent: 'space-around', gap: 8 }}>
-          <Button
-            title="fghj Me"
-            onPress={() => {
-              // Add your button logic here
-              router.push('/(auth)/singup-recommand/profile');
-            }}
-          />
-          {/* <TouchableOpacity style={styles.localButton}>
-            <Text style={{ color: 'white', fontWeight: 'bold' }}>LOGIN</Text>
-            <Link href={'/(auth)/singup-recommand/profile'}>Login</Link>
-          </TouchableOpacity> */}
-          {/* <TouchableOpacity
-            style={styles.localButton}
-            onPress={() => router.push('/signUp')}
-          >
-            <Text style={{ color: 'white', fontWeight: 'bold' }}>SIGN UP</Text>
-          </TouchableOpacity> */}
-          <Button
-            title="Click Me"
-            onPress={() => {
-              // Add your button logic here
-              router.push('/signUp');
-            }}
-          />
+          <Link href="/(auth)/recommend" asChild>
+            <TouchableOpacity style={styles.localButton}>
+              <Text style={styles.buttonText}>LOGIN</Text>
+            </TouchableOpacity>
+          </Link>
+          <Link href="/(auth)/signUp" asChild>
+            <TouchableOpacity style={styles.localButton}>
+              <Text style={styles.buttonText}>SIGN UP</Text>
+            </TouchableOpacity>
+          </Link>
         </View>
 
         <Separator />
@@ -87,7 +71,6 @@ export default function LoginScreen() {
             style={styles.loginButton}
             onPress={() => Alert.alert('Button Pressed')}
           >
-            {/* <Ionicons name="logo-google" size={30} color="black" /> */}
             <Image
               source={{
                 uri: 'https://images.icon-icons.com/2429/PNG/512/google_logo_icon_147282.png',
@@ -150,9 +133,14 @@ const styles = StyleSheet.create({
   localButton: {
     height: 32,
     backgroundColor: colors.primary,
+    borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 12,
+    paddingHorizontal: 16,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
   loginButton: {
     width: 56,

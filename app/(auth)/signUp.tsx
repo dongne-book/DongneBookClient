@@ -106,7 +106,7 @@ export default function LoginScreen() {
       <View style={{}}>
         <TouchableOpacity
           style={styles.localButton}
-          onPress={() => router.push('/(auth)/singup-recommand/profile')}
+          onPress={() => router.push('/singup-recommand/profile')}
         >
           <Text style={{ color: 'white', fontWeight: 'bold' }}>회원가입</Text>
         </TouchableOpacity>
