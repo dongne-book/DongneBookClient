@@ -3,7 +3,6 @@ import Accordion from '@/components/MakeUI/AccordionWithCheck';
 import GaugeBar from '@/components/MakeUI/GaugeBar';
 import { useRouter } from 'expo-router';
 import {
-  Dimensions,
   ScrollView,
   StyleSheet,
   Text,
@@ -24,8 +23,6 @@ const list = {
 
 const Location = () => {
   const router = useRouter();
-  const { width, height } = Dimensions.get('window');
-  const imageRadius = width / 3;
 
   return (
     <View style={styles.container}>
@@ -47,35 +44,37 @@ const Location = () => {
       </View>
 
       <ScrollView style={{ flex: 6.5, backgroundColor: 'white', padding: 20 }}>
-        {Object.entries(list).map(([region, cities]) => (
-          <Accordion title={region} content={cities} />
+        {Object.entries(list).map(([region, cities], index) => (
+          <Accordion title={region} content={cities} key={index} />
         ))}
       </ScrollView>
 
       <View
         style={{
-          flex: 1,
+          height: 100,
           flexDirection: 'row',
           width: '100%',
           backgroundColor: 'white',
           overflow: 'hidden',
           padding: 16,
           justifyContent: 'space-between',
+          position: 'absolute',
+          bottom: 0,
         }}
       >
         <TouchableOpacity
           style={[styles.next, { backgroundColor: colors.gray }]}
-          onPress={() => router.push('./profile')}
+          onPress={() => router.push('/(auth)/singup-recommand/profile')}
         >
-          <Text style={{ fontSize: 24, fontWeight: 700, color: 'black' }}>
+          <Text style={{ fontSize: 16, fontWeight: 700, color: 'black' }}>
             이전
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.next}
-          onPress={() => router.push('./preference')}
+          onPress={() => router.push('/(auth)/singup-recommand/preference')}
         >
-          <Text style={{ fontSize: 24, fontWeight: 700, color: 'white' }}>
+          <Text style={{ fontSize: 16, fontWeight: 700, color: 'white' }}>
             다음
           </Text>
         </TouchableOpacity>
@@ -84,7 +83,6 @@ const Location = () => {
   );
 };
 
-export default Location;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -96,10 +94,12 @@ const styles = StyleSheet.create({
   },
   next: {
     width: '45%',
-    height: '80%',
+    height: 60,
     borderRadius: 28,
     backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
   },
 });
+
+export default Location;

@@ -1,19 +1,11 @@
 import colors from '@/assets/colors/color';
 import GaugeBar from '@/components/MakeUI/GaugeBar';
+import TopicGrid from '@/components/MakeUI/TopicGrid';
 import { useRouter } from 'expo-router';
-import {
-  Dimensions,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const Preference = () => {
   const router = useRouter();
-  const { width, height } = Dimensions.get('window');
-  const imageRadius = width / 3;
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -33,7 +25,23 @@ const Preference = () => {
         </View>
       </View>
 
-      <View style={{ flex: 6.5, backgroundColor: 'white', padding: 20 }}></View>
+      <View style={{ flex: 6.5, backgroundColor: 'white', padding: 20 }}>
+        <View style={{ alignItems: 'center' }}>
+          <Text style={styles.title}>관심있는 주제를</Text>
+          <Text style={styles.title}>모두 선택해주세요</Text>
+        </View>
+        <View style={{ alignItems: 'center', marginTop: 12, marginBottom: 12 }}>
+          <Text style={styles.descreption}>
+            관심있는 주제를
+            <Text style={{ color: colors.primary }}>3가지</Text> 이상
+            선택해주세요.
+          </Text>
+          <Text style={styles.descreption}>
+            내게 꼭 맞는 코스를 추천해드릴게요!
+          </Text>
+        </View>
+        <TopicGrid />
+      </View>
 
       <View
         style={{
@@ -48,18 +56,18 @@ const Preference = () => {
       >
         <TouchableOpacity
           style={[styles.next, { backgroundColor: colors.gray }]}
-          onPress={() => router.push('./location')}
+          onPress={() => router.push('/singup-recommand/location')}
         >
-          <Text style={{ fontSize: 24, fontWeight: 700, color: 'black' }}>
+          <Text style={{ fontSize: 16, fontWeight: 700, color: 'black' }}>
             이전
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.next}
-          onPress={() => router.push('./preference')}
+          onPress={() => router.push('/singup-recommand/preference')}
         >
-          <Text style={{ fontSize: 24, fontWeight: 700, color: 'white' }}>
-            다음
+          <Text style={{ fontSize: 16, fontWeight: 700, color: 'white' }}>
+            동네Book 시작하기
           </Text>
         </TouchableOpacity>
       </View>
@@ -67,7 +75,6 @@ const Preference = () => {
   );
 };
 
-export default Preference;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -85,4 +92,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  title: {
+    fontSize: 36,
+    fontWeight: '700',
+  },
+  descreption: {},
 });
+
+export default Preference;

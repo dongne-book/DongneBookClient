@@ -1,11 +1,12 @@
 import colors from '@/assets/colors/color';
+import DuplicateCheck from '@/components/MakeUI/DuplicateCheck';
 import GaugeBar from '@/components/MakeUI/GaugeBar';
+import FontStyles from '@/components/styles/FontStyles';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { MdOutlineEdit } from 'react-icons/md';
+// import { MdOutlineEdit } from 'react-icons/md';
 import {
-  Button,
-  Dimensions,
   Image,
   StyleSheet,
   Text,
@@ -16,62 +17,45 @@ import {
 
 const Profile = () => {
   const router = useRouter();
-  const { width, height } = Dimensions.get('window');
-  const imageRadius = width / 3;
   const [name, setName] = useState('');
   const [nickName, setNickName] = useState('');
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={{ fontSize: 24, fontWeight: '700' }}>프로필 설정</Text>
+        <Text style={FontStyles.subtitle}>프로필 설정</Text>
         <View style={{ marginTop: 12, margin: 12 }}>
           <GaugeBar progress={1} />
         </View>
       </View>
       <View style={styles.bodyImage}>
-        <View
-          style={[styles.circle, { width: imageRadius, height: imageRadius }]}
-        >
-          <Image />
+        <View style={[styles.profileBox]}>
+          <View style={[styles.circle]}>
+            <Image />
+          </View>
+          <TouchableOpacity style={styles.edit}>
+            {/* <MdOutlineEdit /> */}
+            <MaterialIcons name="edit" size={24} color="black" />
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.edit}>
-          <MdOutlineEdit />
-        </TouchableOpacity>
       </View>
       <View style={styles.bodyInput}>
-        <Text style={styles.inputText}>이름</Text>
+        <Text style={FontStyles.inputText}>이름</Text>
         <TextInput
-          style={[styles.input, { marginTop: 8 }]}
+          style={styles.input}
           placeholder="이름을 입력해주세요"
           value={name}
           onChangeText={setName}
         />
-        <Text style={styles.inputText}>닉네임</Text>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
+        <Text style={FontStyles.inputText}>닉네임</Text>
+        <View>
           <TextInput
             style={[styles.input, { width: '100%', marginRight: 10 }]}
             placeholder="공백없이 2 ~ 12 글자를 입력해주세요"
             value={nickName}
             onChangeText={setNickName}
           />
-          <View
-            style={{
-              borderRadius: 8,
-              overflow: 'hidden',
-              position: 'relative',
-              marginBottom: 12,
-            }}
-          >
-            <Button title="중복확인" color={colors.primary} />
-          </View>
+          <DuplicateCheck style={{ top: 10 }} />
         </View>
       </View>
       <View
@@ -84,9 +68,9 @@ const Profile = () => {
       >
         <TouchableOpacity
           style={styles.next}
-          onPress={() => router.push('./location')}
+          onPress={() => router.push('/(auth)/singup-recommand/preference')}
         >
-          <Text style={{ fontSize: 24, fontWeight: 700, color: 'white' }}>
+          <Text style={{ fontSize: 16, fontWeight: 700, color: 'white' }}>
             다음
           </Text>
         </TouchableOpacity>
@@ -95,7 +79,6 @@ const Profile = () => {
   );
 };
 
-export default Profile;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -106,13 +89,22 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   bodyImage: {
-    flex: 4,
+    flex: 2,
     backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative', // Added for absolute positioning of edit
+  },
+  profileBox: {
+    width: 120,
+    height: 120,
     justifyContent: 'center',
     alignItems: 'center',
   },
   circle: {
-    borderRadius: '50%',
+    borderRadius: 100,
+    width: 100,
+    height: 100,
     backgroundColor: colors.gray,
     justifyContent: 'center',
     alignItems: 'center',
@@ -120,22 +112,23 @@ const styles = StyleSheet.create({
   edit: {
     width: 40,
     height: 40,
-    borderRadius: '50%',
+    borderRadius: 20, // Changed from '50%' to 20 for React Native
     backgroundColor: 'gray',
     justifyContent: 'center',
     alignItems: 'center',
-    alignSelf: 'center',
-    marginTop: -40,
-    marginRight: -120,
+    position: 'absolute', // Make it overlap
+    right: 0,
+    bottom: 0,
   },
   bodyInput: {
     flex: 2.5,
     backgroundColor: 'white',
     padding: 16,
+    gap: 8,
   },
   inputText: {
-    fontSize: 20,
-    fontWeight: 700,
+    fontSize: 15,
+    fontWeight: '700',
   },
   input: {
     height: 48,
@@ -144,13 +137,15 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 16,
     paddingHorizontal: 12,
-    fontSize: 16,
+    fontSize: 14,
   },
   next: {
-    height: '80%',
+    height: 60,
     borderRadius: 28,
     backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
   },
 });
+
+export default Profile;
