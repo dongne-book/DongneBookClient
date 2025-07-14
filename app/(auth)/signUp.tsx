@@ -1,7 +1,7 @@
 import colors from '@/assets/colors/color';
 import BirthDateSelector from '@/components/MakeUI/BirthdatInput';
 import DuplicateCheck from '@/components/MakeUI/DuplicateCheck';
-import { useRouter } from 'expo-router';
+import { Link } from 'expo-router';
 import React, { useState } from 'react';
 import {
   Alert,
@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 
 export default function LoginScreen() {
-  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
@@ -104,12 +103,11 @@ export default function LoginScreen() {
         <BirthDateSelector setBirth={setBirth} />
       </View>
       <View style={{}}>
-        <TouchableOpacity
-          style={styles.localButton}
-          onPress={() => router.push('/singup-recommand/profile')}
-        >
-          <Text style={{ color: 'white', fontWeight: 'bold' }}>회원가입</Text>
-        </TouchableOpacity>
+        <Link href={'/(auth)/login'} asChild>
+          <TouchableOpacity style={styles.localButton}>
+            <Text style={{ color: 'white', fontWeight: 'bold' }}>회원가입</Text>
+          </TouchableOpacity>
+        </Link>
       </View>
     </View>
   );

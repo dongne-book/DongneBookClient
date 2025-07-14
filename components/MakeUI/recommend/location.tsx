@@ -20,7 +20,7 @@ const list = {
   },
 };
 
-const Location = ({ step }: RecommendProps) => {
+const Location = ({ step, setContent }: RecommendProps) => {
   return (
     <View style={styles.container}>
       <ScrollView style={{ flex: 4.5, backgroundColor: 'white', padding: 20 }}>
@@ -61,8 +61,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     padding: 16,
     justifyContent: 'space-between',
-    position: 'absolute',
-    bottom: 20,
   },
   next: {
     width: '45%',

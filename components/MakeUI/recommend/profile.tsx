@@ -3,7 +3,6 @@ import colors from '@/assets/colors/color';
 import DuplicateCheck from '@/components/MakeUI/DuplicateCheck';
 import FontStyles from '@/components/styles/FontStyles';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { useState } from 'react';
 import {
   Image,
   StyleSheet,
@@ -13,9 +12,21 @@ import {
   View,
 } from 'react-native';
 
-const Profile = ({ step }: RecommendProps) => {
-  const [name, setName] = useState('');
-  const [nickName, setNickName] = useState('');
+interface Content {
+  name: string;
+  nickName: string;
+}
+
+interface ProfileProps extends RecommendProps {
+  content: Content;
+  setContents: (content: Content) => void;
+}
+
+const Profile = ({ step, content, setContents }: ProfileProps) => {
+  const nickNameDuplicateCheck = async () => {
+    try {
+    } catch {}
+  };
 
   return (
     <View style={styles.container}>
@@ -34,16 +45,16 @@ const Profile = ({ step }: RecommendProps) => {
         <TextInput
           style={styles.input}
           placeholder="이름을 입력해주세요"
-          value={name}
-          onChangeText={setName}
+          value={content.name}
+          onChangeText={(text) => setContents({ ...content, name: text })}
         />
         <Text style={FontStyles.inputText}>닉네임</Text>
         <View>
           <TextInput
             style={[styles.input, { width: '100%', marginRight: 10 }]}
             placeholder="공백없이 2 ~ 12 글자를 입력해주세요"
-            value={nickName}
-            onChangeText={setNickName}
+            value={content.nickName}
+            onChangeText={(text) => setContents({ ...content, nickName: text })}
           />
           <DuplicateCheck style={{ top: 10 }} />
         </View>
@@ -120,8 +131,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     overflow: 'hidden',
     padding: 16,
-    position: 'absolute',
-    bottom: 20,
   },
   next: {
     height: 60,

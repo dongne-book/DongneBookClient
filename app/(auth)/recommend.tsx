@@ -9,6 +9,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 export interface RecommendProps {
   step: (stage: number) => void;
+  setContent?: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const step: { [key: number]: string } = {
@@ -19,6 +20,9 @@ const step: { [key: number]: string } = {
 
 const Recommend = () => {
   const [stage, setStage] = useState<number>(1);
+  const [profile, setProfile] = useState({ name: 'kim', nickName: '' });
+  const [location, setLocation] = useState<string[]>([]);
+  const [preference, setPreference] = useState<string[]>([]);
 
   return (
     <View style={styles.container}>
@@ -35,9 +39,13 @@ const Recommend = () => {
         </View>
       </View>
       <View style={styles.body}>
-        {stage == 1 && <Profile step={setStage} />}
-        {stage == 2 && <Location step={setStage} />}
-        {stage == 3 && <Preference step={setStage} />}
+        {stage == 1 && (
+          <Profile step={setStage} content={profile} setContents={setProfile} />
+        )}
+        {stage == 2 && <Location step={setStage} setContent={setLocation} />}
+        {stage == 3 && (
+          <Preference step={setStage} setContent={setPreference} />
+        )}
       </View>
     </View>
   );
