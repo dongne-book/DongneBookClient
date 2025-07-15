@@ -51,8 +51,9 @@ const AccordionItem = ({ title, content }: AccordionItemProps) => {
       </TouchableOpacity>
       {expanded && (
         <Animated.View style={{ height }}>
-          {content.map((val) => (
+          {content.map((val, index) => (
             <View
+              key={index}
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
@@ -83,7 +84,7 @@ const Accordion = ({ title, content }: AccordionProps) => {
     <View>
       <Text>{title}</Text>
       {Object.entries(content).map(([key, val]) => (
-        <AccordionItem title={key} content={val} />
+        <AccordionItem title={key} content={val} key={key} />
       ))}
     </View>
   );
